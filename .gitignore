@@ -1,0 +1,7 @@
+build/
+Makefile
+*.o
+*.out
+*.json
+.vscode/
+.clang-format
