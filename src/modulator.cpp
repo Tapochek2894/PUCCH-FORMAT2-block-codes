@@ -4,7 +4,8 @@ namespace pucch_f2 {
 
 std::vector<std::complex<double>> QpskModulator::Modulate(const std::vector<uint8_t>& codebits) {
     if (codebits.size() % 2 != 0) {
-        throw std::invalid_argument("Codebits size must be even");
+        throw std::invalid_argument("Codebits size must be even, got " +
+                                    std::to_string(codebits.size()));
     }
 
     std::vector<std::complex<double>> modulated_symbols;

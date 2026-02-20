@@ -1,4 +1,4 @@
-#include "awgn.hpp"
+#include "channel.hpp"
 
 namespace pucch_f2 {
 
