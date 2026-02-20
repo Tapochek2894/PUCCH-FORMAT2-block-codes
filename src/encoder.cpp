@@ -53,7 +53,7 @@ std::vector<uint8_t> Encoder::Encode(const std::vector<uint8_t>& data) {
                                     " bits, got " + std::to_string(data.size()));
     }
 
-    for (size_t i = 0; i < data.size(); ++i) {
+    for (std::size_t i = 0; i < data.size(); ++i) {
         if (data[i] != 0 && data[i] != 1) {
             throw std::invalid_argument("Invalid bit value at position " + std::to_string(i) +
                                         ": must be 0 or 1, got " + std::to_string(data[i]));

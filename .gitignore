@@ -1,6 +1,7 @@
 build/
 *.o
 *.out
-*.json
+*.elf
 .vscode/
+result.json
 .clang-format

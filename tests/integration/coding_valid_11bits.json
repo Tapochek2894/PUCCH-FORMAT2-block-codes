@@ -1,0 +1,5 @@
+{
+    "mode": "coding",
+    "num_of_pucch_f2_bits": 11,
+    "pucch_f2_bits": [1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0]
+}

@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -std=c++17 -O3 -Wall -Werror -Wextra -Wpedantic -Iinclude
 
-TARGET = pucch_codes_modeling
+TARGET = pucch_codes_modeling.elf
 SRCS = $(wildcard src/*.cpp)
 OBJS = $(SRCS:src/%.cpp=build/%.o)
 
@@ -20,6 +20,9 @@ clean:
 run: $(TARGET)
 	./$(TARGET) $(filter-out $@,$(MAKECMDGOALS))
 
+test: $(TARGET)
+	@cd tests/integration && ./run_all_tests.sh
+
 %:
 	@:
 
@@ -27,4 +30,5 @@ help:
 	@echo "Использование:"
 	@echo "  make — сборка"
 	@echo "  make run — запуск"
+	@echo "  make test — тестирование"
 	@echo "  make clean — очистка"

@@ -1,0 +1,5 @@
+{
+    "mode": "decoding",
+    "num_of_pucch_f2_bits": 2,
+    "qpsk_symbols": ["invalid_format"]
+}
