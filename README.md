@@ -1,6 +1,6 @@
-# PUCCH F2 Codec
+# PUCCH-FORMAT2-block-codes
 
-Реализация кодера для **5G PUCCH Format 2** (Physical Uplink Control Channel). Включает кодирование, модуляцию QPSK, передачу через канал AWGN, демодуляцию и декодирование.
+Моделирование работы блочных кодов в **PUCCH FORMAT2** (Physical Uplink Control Channel). Включает кодирование, модуляцию QPSK, передачу через канал AWGN, демодуляцию и декодирование.
 
 ---
 
