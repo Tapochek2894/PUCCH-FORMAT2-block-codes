@@ -1,4 +1,4 @@
-#include <awgn.hpp>
+#include "awgn.hpp"
 
 namespace pucch_f2 {
 
@@ -10,6 +10,8 @@ AwgnChannel::AwgnChannel(double snr_db, uint32_t seed) : random_generator_(seed)
 std::vector<std::complex<double>>
 AwgnChannel::Transmit(const std::vector<std::complex<double>>& symbols) {
     std::vector<std::complex<double>> noisy_symbols;
+    noisy_symbols.reserve(symbols.size());
+
     std::normal_distribution<double> noise(0.0, sigma_);
 
     for (const auto& symbol : symbols) {
