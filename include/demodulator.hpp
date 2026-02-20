@@ -1,5 +1,5 @@
-#ifndef PUCH_F2_QPSK_DEMODULATOR_HPP
-#define PUCH_F2_QPSK_DEMODULATOR_HPP
+#ifndef PUCCH_F2_DEMODULATOR_HPP
+#define PUCCH_F2_DEMODULATOR_HPP
 
 #include <complex>
 #include <cstdint>
@@ -17,4 +17,4 @@ private:
 
 } // namespace pucch_f2
 
-#endif // PUCH_F2_QPSK_DEMODULATOR_HPP
+#endif // PUCCH_F2_DEMODULATOR_HPP
