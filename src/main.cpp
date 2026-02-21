@@ -301,15 +301,18 @@ int main(int argc, char* argv[]) {
 
         std::cout << output_str << std::endl;
 
-        try {
-            std::ofstream result_file("result.json");
-            if (!result_file.is_open()) {
-                throw std::runtime_error("Cannot create result.json");
+        const char* disable_file = std::getenv("PUCCH_DISABLE_FILE_OUTPUT");
+        if (disable_file == nullptr) {
+            try {
+                std::ofstream result_file("result.json");
+                if (!result_file.is_open()) {
+                    throw std::runtime_error("Cannot create result.json");
+                }
+                result_file << output_str << std::endl;
+                result_file.close();
+            } catch (const std::exception& e) {
+                std::cerr << "Warning: Failed to write result.json: " << e.what() << std::endl;
             }
-            result_file << output_str << std::endl;
-            result_file.close();
-        } catch (const std::exception& e) {
-            std::cerr << "Warning: Failed to write result.json: " << e.what() << std::endl;
         }
 
         return 0;
