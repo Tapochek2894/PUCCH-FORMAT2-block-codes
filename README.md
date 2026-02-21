@@ -120,7 +120,6 @@ PUCCH-FORMAT2-block-codes/
 
 Принимает вектор комплексных символов, вычисляет LLR и восстанавливает информационные биты.
 
-
 **Вход:**
 
 ```json
@@ -293,7 +292,6 @@ cd tests/integration && ./run_all_tests.sh
 
 После запуска `make snr-sweep` автоматически генерируется график `results/full_snr_sweep.png`
 
-![Пример графика](results/full_snr_sweep.png)
 *(График строится с помощью `scripts/plot_full_sweep.py`)*
 
 **Требования для графиков:**
