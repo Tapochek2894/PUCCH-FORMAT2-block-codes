@@ -21,6 +21,8 @@ private:
     int code_length_;
 };
 
+inline constexpr std::array<int, 5> kValidCodeLengths = {2, 4, 6, 8, 11};
+
 } // namespace pucch_f2
 
 #endif // PUCCH_F2_ENCODER_HPP

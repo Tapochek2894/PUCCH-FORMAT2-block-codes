@@ -7,8 +7,6 @@
 
 namespace pucch_f2 {
 
-constexpr std::array<int, 5> kValidCodeLengths = {2, 4, 6, 8, 11};
-
 Decoder::Decoder(int code_length) : code_length_(code_length), num_codewords_(1 << code_length) {
     bool is_valid = false;
     for (int valid_len : kValidCodeLengths) {
@@ -23,7 +21,9 @@ Decoder::Decoder(int code_length) : code_length_(code_length), num_codewords_(1 
                                     ". Must be one of {2, 4, 6, 8, 11} for PUCCH Format 2");
     }
 
-    BuildCodewordTable();
+    if (codeword_table_.empty()) {
+        BuildCodewordTable();
+    }
 }
 
 void Decoder::BuildCodewordTable() {

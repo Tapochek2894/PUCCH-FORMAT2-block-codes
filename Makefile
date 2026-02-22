@@ -35,9 +35,6 @@ snr-sweep-no-plot: $(TARGET)
 	@chmod +x scripts/snr_sweep.sh
 	@./scripts/snr_sweep.sh 20000 -10 4 2 1
 
-%:
-	@:
-
 help:
 	@echo "Usage:"
 	@echo "  make              	 — сборка"

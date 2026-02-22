@@ -15,7 +15,7 @@ for test_file in *.json; do
     rm -fr result.json
     echo -n "Testing $test_file ... "
     
-    output=$(cat "$test_file" | $BINARY 2>&1)
+    output=$($BINARY "$test_file" 2>&1)
     exit_code=$?
     
     if [[ "$test_file" == *"invalid"* ]]; then

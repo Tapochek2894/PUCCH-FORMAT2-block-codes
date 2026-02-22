@@ -19,7 +19,7 @@ private:
     int code_length_;
     int num_codewords_;
 
-    std::vector<std::vector<uint8_t>> codeword_table_;
+    static inline std::vector<std::vector<uint8_t>> codeword_table_;
 
     void BuildCodewordTable();
 

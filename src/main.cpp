@@ -12,6 +12,15 @@ using json = nlohmann::json;
 
 const uint32_t RANDOM_SEED = 5090U;
 
+bool ValidateCodeLength(int code_length) {
+    for (int len : pucch_f2::kValidCodeLengths) {
+        if (code_length == len) {
+            return true;
+        }
+    }
+    return false;
+}
+
 std::complex<double> ParseComplex(const std::string& string) {
     double re, im;
     char sign, j_char;
@@ -36,6 +45,7 @@ void ValidateCodingInput(const json& input) {
     if (!input.contains("num_of_pucch_f2_bits")) {
         throw std::invalid_argument("Missing field: 'num_of_pucch_f2_bits'");
     }
+
     if (!input.contains("pucch_f2_bits")) {
         throw std::invalid_argument("Missing field: 'pucch_f2_bits'");
     }
@@ -55,16 +65,7 @@ void ValidateCodingInput(const json& input) {
         }
     }
 
-    constexpr std::array<int, 5> valid_lengths = {2, 4, 6, 8, 11};
-    bool valid = false;
-    for (int len : valid_lengths) {
-        if (code_length == len) {
-            valid = true;
-            break;
-        }
-    }
-
-    if (!valid) {
+    if (!ValidateCodeLength(code_length)) {
         throw std::invalid_argument("Invalid code_length: " + std::to_string(code_length) +
                                     ". Must be one of {2, 4, 6, 8, 11}");
     }
@@ -74,11 +75,17 @@ void ValidateDecodingInput(const json& input) {
     if (!input.contains("num_of_pucch_f2_bits")) {
         throw std::invalid_argument("Missing field: 'num_of_pucch_f2_bits'");
     }
+
     if (!input.contains("qpsk_symbols")) {
         throw std::invalid_argument("Missing field: 'qpsk_symbols'");
     }
 
-    [[maybe_unused]] int code_length = input["num_of_pucch_f2_bits"].get<int>();
+    int code_length = input["num_of_pucch_f2_bits"].get<int>();
+    if (!ValidateCodeLength(code_length)) {
+        throw std::invalid_argument("Invalid code_length: " + std::to_string(code_length) +
+                                    ". Must be one of {2, 4, 6, 8, 11}");
+    }
+
     auto symbols = input["qpsk_symbols"].get<std::vector<std::string>>();
 
     const int expected_symbols = 10;
@@ -102,9 +109,11 @@ void ValidateChannelSimulationInput(const json& input) {
     if (!input.contains("num_of_pucch_f2_bits")) {
         throw std::invalid_argument("Missing field: 'num_of_pucch_f2_bits'");
     }
+
     if (!input.contains("iterations")) {
         throw std::invalid_argument("Missing field: 'iterations'");
     }
+
     if (!input.contains("snr_db")) {
         throw std::invalid_argument("Missing field: 'snr_db'");
     }
@@ -113,15 +122,7 @@ void ValidateChannelSimulationInput(const json& input) {
     int iterations = input["iterations"].get<int>();
     double snr_db = input["snr_db"].get<double>();
 
-    constexpr std::array<int, 5> valid_lengths = {2, 4, 6, 8, 11};
-    bool valid = false;
-    for (int len : valid_lengths) {
-        if (code_length == len) {
-            valid = true;
-            break;
-        }
-    }
-    if (!valid) {
+    if (!ValidateCodeLength(code_length)) {
         throw std::invalid_argument("Invalid code_length: " + std::to_string(code_length) +
                                     ". Must be one of {2, 4, 6, 8, 11}");
     }
@@ -240,24 +241,20 @@ json RunChannelSimulation(const json& input) {
 }
 
 std::string ReadJsonInput(int argc, char* argv[]) {
-    if (argc > 1) {
-        std::string arg = argv[1];
-        if (arg.find('/') != std::string::npos || arg.find('.') != std::string::npos) {
-            std::ifstream file(arg);
-            if (file.is_open()) {
-                std::stringstream buffer;
-                buffer << file.rdbuf();
-                return buffer.str();
-            }
-        }
-
-        return arg;
+    if (argc < 2) {
+        throw std::invalid_argument("Not enough command line arguments");
     }
 
-    std::stringstream buffer;
-    buffer << std::cin.rdbuf();
+    std::string arg = argv[1];
+    std::ifstream file(arg);
 
-    return buffer.str();
+    if (file.is_open()) {
+        std::stringstream buffer;
+        buffer << file.rdbuf();
+        return buffer.str();
+    }
+
+    return arg;
 }
 
 int main(int argc, char* argv[]) {
@@ -311,7 +308,7 @@ int main(int argc, char* argv[]) {
                 result_file << output_str << std::endl;
                 result_file.close();
             } catch (const std::exception& e) {
-                std::cerr << "Warning: Failed to write result.json: " << e.what() << std::endl;
+                std::cerr << "Failed to write result.json: " << e.what() << std::endl;
             }
         }
 

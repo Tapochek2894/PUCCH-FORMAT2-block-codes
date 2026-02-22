@@ -30,8 +30,6 @@ constexpr std::array<std::array<uint8_t, Encoder::kMaxCodeLength>, Encoder::kCod
 
     }};
 
-constexpr std::array<int, 5> kValidCodeLengths = {2, 4, 6, 8, 11};
-
 Encoder::Encoder(int code_length) : code_length_(code_length) {
     bool is_valid = false;
     for (int valid_len : kValidCodeLengths) {
