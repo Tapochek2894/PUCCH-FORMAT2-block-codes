@@ -20,8 +20,17 @@ clean:
 run: $(TARGET)
 	./$(TARGET) $(filter-out $@,$(MAKECMDGOALS))
 
+unit-test: $(TARGET)
+	@echo "=== Running Unit Tests ==="
+	@cd tests/unit && $(MAKE) run
+
+integration-test: $(TARGET)
+	@echo "=== Running Integration Tests ==="
+	@cd tests/integration && ./run_integration_tests.sh
+
 test: $(TARGET)
-	@cd tests/integration && ./run_all_tests.sh
+	@$(MAKE) unit-test
+	@$(MAKE) integration-test
 
 snr-sweep: $(TARGET)
 	@chmod +x scripts/snr_sweep.sh scripts/plot_full_sweep.py

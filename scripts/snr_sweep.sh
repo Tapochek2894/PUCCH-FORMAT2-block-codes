@@ -53,12 +53,12 @@ EOF
     EXIT_CODE=$?
     
     if [ $EXIT_CODE -ne 0 ]; then
-        echo "✗ FAILED"
+        echo "FAILED"
         echo "    Error: $OUTPUT"
         continue
     fi
     
-    echo "✓ Done"
+    echo "Done"
     ALL_RESULTS+=("$OUTPUT")
 done
     echo ""
@@ -126,17 +126,17 @@ if [ "$SKIP_PLOT" -eq 0 ]; then
         if command -v python3 &> /dev/null; then
             python3 "$PLOT_SCRIPT" "$OUTPUT_FILE"
             if [ $? -eq 0 ]; then
-                echo "✓ Plot generated successfully"
+                echo "Plot generated successfully"
             else
-                echo "⚠ Plot script failed (check matplotlib installation)"
+                echo "Plot script failed (check matplotlib installation)"
                 echo "  Install: pip3 install matplotlib numpy"
             fi
         else
-            echo "⚠ Python3 not found. Skipping plot generation."
+            echo "Python3 not found. Skipping plot generation."
             echo "  Install Python3 to enable automatic plotting."
         fi
     else
-        echo "⚠ Plot script '$PLOT_SCRIPT' not found. Skipping plot generation."
+        echo "Plot script '$PLOT_SCRIPT' not found. Skipping plot generation."
     fi
 else
     echo "Plot generation skipped (SKIP_PLOT=1)"

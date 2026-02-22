@@ -22,6 +22,7 @@ private:
 };
 
 inline constexpr std::array<int, 5> kValidCodeLengths = {2, 4, 6, 8, 11};
+inline constexpr int kCodewordLength = 20;
 
 } // namespace pucch_f2
 
