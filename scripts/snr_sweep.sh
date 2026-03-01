@@ -3,10 +3,10 @@
 BINARY="./pucch_codes_modeling.elf"
 OUTPUT_FILE="results/full_snr_sweep.json"
 PLOT_SCRIPT="scripts/plot_full_sweep.py"
-ITERATIONS=${1:-20000}
+ITERATIONS=${1:-10000}
 SNR_START=${2:--10}
-SNR_END=${3:-4}
-SNR_STEP=${4:-2}
+SNR_END=${3:-6}
+SNR_STEP=${4:-1}
 SKIP_PLOT=${5:-0}
 
 CODE_LENGTHS=(2 4 6 8 11)

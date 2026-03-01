@@ -15,12 +15,15 @@ build/%.o: src/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(TARGET) build results
+	rm -rf $(TARGET) build
 
 run: $(TARGET)
 	./$(TARGET) $(filter-out $@,$(MAKECMDGOALS))
 
 unit-test: $(TARGET)
+	rm -fr tests/unit/obj
+	mkdir tests/unit/obj
+	cp -r $(OBJS) tests/unit/obj
 	@echo "=== Running Unit Tests ==="
 	@cd tests/unit && $(MAKE) run
 
@@ -38,11 +41,11 @@ snr-sweep: $(TARGET)
 
 snr-sweep-fast: $(TARGET)
 	@chmod +x scripts/snr_sweep.sh scripts/plot_full_sweep.py
-	@./scripts/snr_sweep.sh 100 -10 4 4
+	@./scripts/snr_sweep.sh 100 -10 6 4
 
 snr-sweep-no-plot: $(TARGET)
 	@chmod +x scripts/snr_sweep.sh
-	@./scripts/snr_sweep.sh 20000 -10 4 2 1
+	@./scripts/snr_sweep.sh 10000 -10 6 2 1
 
 help:
 	@echo "Usage:"
@@ -50,6 +53,6 @@ help:
 	@echo "  make run            — запуск"
 	@echo "  make test           — тесты"
 	@echo "  make snr-sweep-fast — быстрая симуляция (100 итераций)"
-	@echo "  make snr-sweep      — полная симуляция SNR (20000 итераций)"
+	@echo "  make snr-sweep      — полная симуляция SNR (10000 итераций)"
 	@echo "  make snr-no-plot    — полная симуляция без построения графиков"
 	@echo "  make clean          — очистка"

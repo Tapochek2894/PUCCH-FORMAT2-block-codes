@@ -4,13 +4,14 @@
 #include "encoder.hpp"
 #include "modulator.hpp"
 
+#include <chrono>
 #include <fstream>
 #include <iostream>
 #include <nlohmann/json.hpp>
 
 using json = nlohmann::json;
 
-const uint32_t RANDOM_SEED = 5090U;
+const uint32_t RANDOM_SEED = std::time(0);
 
 bool ValidateCodeLength(int code_length) {
     for (int len : pucch_f2::kValidCodeLengths) {

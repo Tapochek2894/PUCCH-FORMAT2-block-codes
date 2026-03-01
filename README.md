@@ -23,10 +23,10 @@ make
 # 2. Запуск с входным JSON-файлом
 make run input.json
 
-# 3. Запуск интеграционных и юнит-тестов
+# 3. Запуск интеграционных и unit-тестов
 make test
 
-# 4. Полное моделирование BLER vs SNR (20000 итераций, все длины кода, шаг 2дБ)
+# 4. Полное моделирование BLER vs SNR (10000 итераций, все длины кода)
 make snr-sweep
 
 # 5. Полное моделирование BLER vs SNR без построения графиков
@@ -51,8 +51,6 @@ PUCCH-FORMAT2-block-codes/
 │   ├── demodulator.hpp
 │   ├── encoder.hpp
 │   ├── modulator.hpp
-│   └── nlohmann/
-│       └── json.hpp         # Сторонняя библиотека (header-only)
 ├── src/                     # Исходный код
 │   ├── channel.cpp
 │   ├── decoder.cpp
@@ -69,7 +67,7 @@ PUCCH-FORMAT2-block-codes/
 │       └── Makefile
 ├── scripts/                 # Автоматизация
 │   ├── plot_full_sweep.py   # Построение графиков BLER
-│   └── snr_sweep.sh         # Скрипт массового моделирования
+│   └── snr_sweep.sh         # Скрипт моделирования
 ├── build/                   # Артефакты компиляции (игнорируется в Git)
 ├── results/                 # Результаты симуляций (игнорируется в Git)
 ├── Makefile                 # Основная система сборки
@@ -183,7 +181,12 @@ PUCCH-FORMAT2-block-codes/
 }
 ```
 
-**Выход:**
+**Результат:**
+
+`results/full_snr_sweep.json` — массив результатов с метаданными
+`results/full_snr_sweep.png` — график BLER vs SNR
+
+Пример вывода JSON:
 
 ```json
 {
@@ -218,8 +221,10 @@ PUCCH-FORMAT2-block-codes/
 | `make` | Сборка release-версии |
 | `make clean` | Очистка артефактов сборки |
 | `make run [args]` | Запуск программы с аргументами |
-| `make test` | Запуск юнит-тестов и интеграционных тестов |
-| `make snr-sweep [iters] [start] [end] [step]` | Полное моделирование (по умолчанию: 20000 итераций, -10...4 дБ, шаг 2) |
+| `make test` | Запуск unit-тестов и интеграционных тестов |
+| `make unit-test` | Запуск только unit-тестов |
+| `make integrarion-test` | Запуск только интеграционных тестов |
+| `make snr-sweep [iters] [start] [end] [step]` | Полное моделирование (по умолчанию: 10000 итераций, -10...6 дБ) |
 | `make help` | Показать справку |
 
 ---
@@ -263,7 +268,7 @@ PUCCH-FORMAT2-block-codes/
 
 ## 🧪 Тестирование
 
-Проект использует интеграционные тесты
+Проект использует интеграционные и Unit-тесты
 
 ### Интеграционные тесты (`tests/integration/`)
 
@@ -273,10 +278,24 @@ PUCCH-FORMAT2-block-codes/
 
 - **Невалидные сценарии:** Проверка обработки ошибок (неверный JSON, плохие поля)
 
+### Unit-тесты (`tests/unit/`)
+
+Проверяют корректность работы **отдельных классов** (Encoder, Decoder, Modulator) с использованием GoogleTest.
+
+- **Encoder/Decoder**: проверка кодирования/декодирования без шума
+- **Modulator/Demodulator**: проверка маппинга QPSK и вычисления LLR
+- **Channel**: проверка статистики шума AWGN
+- **Валидация**: проверка обработки некорректных входных данных
+
 ```bash
+# Запуск всех тестов
 make test
-# Или вручную:
-cd tests/integration && ./run_all_tests.sh
+
+# Запуск только unit-тестов
+make unit-test
+
+# Запуск только интеграционных тестов
+make integration-test
 ```
 
 ---
@@ -287,16 +306,25 @@ cd tests/integration && ./run_all_tests.sh
 
 *(График строится с помощью `scripts/plot_full_sweep.py`)*
 
-**Требования для графиков:**
-
-```bash
-pip3 install matplotlib numpy
-```
-
 **Ручной запуск построения:**
 
 ```bash
 python3 scripts/plot_full_sweep.py results/full_snr_sweep.json
+```
+
+---
+
+## 📦 Установка зависимостей
+
+```bash
+# Библиотеки для построения графиков
+sudo apt install python3-matplotlib python3-numpy
+
+# Библиотека GTest
+sudo apt apt install libgtest-dev
+
+# Библиотека nlohmann/json
+sudo apt apt install nlohmann-json3-dev
 ```
 
 ---

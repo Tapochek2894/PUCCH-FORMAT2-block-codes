@@ -13,7 +13,7 @@ except ImportError as e:
     sys.exit(1)
 
 def main():
-    filename = sys.argv[1] if len(sys.argv) > 1 else 'results/full_snr_sweep.json'
+    filename = sys.argv[1] if len(sys.argv) > 1 else '../results/full_snr_sweep.json'
     
     if not os.path.exists(filename):
         print(f"Error: File '{filename}' not found")
@@ -58,7 +58,7 @@ def main():
     
     output_png = filename.replace('.json', '.png')
     plt.savefig(output_png, dpi=300, bbox_inches='tight')
-    print(f"✓ Plot saved to {output_png}")
+    print(f"Plot saved to {output_png}")
     plt.show()
 
 if __name__ == '__main__':
