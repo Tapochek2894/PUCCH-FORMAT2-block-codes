@@ -1,8 +1,8 @@
 #!/bin/bash
 
 BINARY="./pucch_codes_modeling.elf"
-OUTPUT_FILE="results/full_snr_sweep.json"
-PLOT_SCRIPT="scripts/plot_full_sweep.py"
+OUTPUT_FILE="results/full_snr_modeling.json"
+PLOT_SCRIPT="scripts/plot_full_modeling.py"
 ITERATIONS=${1:-10000}
 SNR_START=${2:--10}
 SNR_END=${3:-6}

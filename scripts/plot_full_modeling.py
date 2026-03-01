@@ -13,7 +13,7 @@ except ImportError as e:
     sys.exit(1)
 
 def main():
-    filename = sys.argv[1] if len(sys.argv) > 1 else '../results/full_snr_sweep.json'
+    filename = sys.argv[1] if len(sys.argv) > 1 else '../results/full_snr_modeling.json'
     
     if not os.path.exists(filename):
         print(f"Error: File '{filename}' not found")

@@ -2,8 +2,8 @@ CXX ?= g++
 CXXFLAGS = -std=c++17 -O3 -Wall -Wextra -I../../include
 LDFLAGS = -lgtest -lgtest_main -lpthread
 
-TARGET = test_runner
-OBJ_DIR = obj
+TARGET = pucch_codes_modeling.elf
+OBJ_DIR = build
 
 TEST_SRCS = $(wildcard *.cpp)
 
@@ -40,7 +40,6 @@ run: all
 	echo ""; \
 	echo "Cleaning up object files..."; \
 	rm -rf $(OBJ_DIR) $(TARGET); \
-	echo "✓ Cleanup complete"; \
 	exit $$EXIT_CODE
 
 clean:

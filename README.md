@@ -27,13 +27,13 @@ make run input.json
 make test
 
 # 4. Полное моделирование BLER vs SNR (10000 итераций, все длины кода)
-make snr-sweep
+make snr-modeling
 
 # 5. Полное моделирование BLER vs SNR без построения графиков
-make snr-sweep-no-plot
+make snr-modeling-no-plot
 
 # 6. Быстрый тест моделирования (100 итераций, шаг 4дБ)
-make snr-sweep-fast
+make snr-modeling-fast
 
 # 7. Очистка артефактов сборки
 make clean
@@ -45,33 +45,33 @@ make clean
 
 ``` bash
 PUCCH-FORMAT2-block-codes/
-├── include/                 # Заголовочные файлы библиотеки
+├── include/                  # Заголовочные файлы библиотеки
 │   ├── channel.hpp
 │   ├── decoder.hpp
 │   ├── demodulator.hpp
 │   ├── encoder.hpp
 │   ├── modulator.hpp
-├── src/                     # Исходный код
+├── src/                      # Исходный код
 │   ├── channel.cpp
 │   ├── decoder.cpp
 │   ├── demodulator.cpp
 │   ├── encoder.cpp
-│   ├── main.cpp             # Точка входа + CLI логика
+│   ├── main.cpp              # Точка входа + CLI логика
 │   └── modulator.cpp
-├── tests/                   # Тесты
-│   ├── integration/         # Интеграционные тесты (JSON-сценарии)
+├── tests/                    # Тесты
+│   ├── integration/          # Интеграционные тесты (JSON-сценарии)
 │   │   ├── *.json
 │   │   └── run_all_tests.sh
-│   └── unit/                # Юнит-тесты (GTest)
+│   └── unit/                 # Юнит-тесты (GTest)
 │       ├── test_*.cpp
 │       └── Makefile
-├── scripts/                 # Автоматизация
-│   ├── plot_full_sweep.py   # Построение графиков BLER
-│   └── snr_sweep.sh         # Скрипт моделирования
-├── build/                   # Артефакты компиляции (игнорируется в Git)
-├── results/                 # Результаты симуляций (игнорируется в Git)
-├── Makefile                 # Основная система сборки
-├── LICENSE                  # Лицензия MIT
+├── scripts/                  # Автоматизация
+│   ├── plot_full_modeling.py # Построение графиков BLER
+│   └── snr_modeling.sh       # Скрипт моделирования
+├── build/                    # Артефакты компиляции (игнорируется в Git)
+├── results/                  # Результаты симуляций (игнорируется в Git)
+├── Makefile                  # Основная система сборки
+├── LICENSE                   # Лицензия MIT
 └── README.md
 ```
 
@@ -166,9 +166,9 @@ PUCCH-FORMAT2-block-codes/
 
 ### 4. Моделирование
 
-Автоматический прогон симуляции для всех длин кода {2, 4, 6, 8, 11} в диапазоне SNR. Запускается через make **snr-sweep**
+Автоматический прогон симуляции для всех длин кода {2, 4, 6, 8, 11} в диапазоне SNR. Запускается через make **snr-modeling**
 
-Результат: Файл **results/full_snr_sweep.json** с метаданными и массивом результатов, а также график **results/full_snr_sweep.png**
+Результат: Файл **results/full_snr_modeling.json** с метаданными и массивом результатов, а также график **results/full_snr_modeling.png**
 
 **Вход:**
 
@@ -183,8 +183,8 @@ PUCCH-FORMAT2-block-codes/
 
 **Результат:**
 
-`results/full_snr_sweep.json` — массив результатов с метаданными
-`results/full_snr_sweep.png` — график BLER vs SNR
+`results/full_snr_modeling.json` — массив результатов с метаданными
+`results/full_snr_modeling.png` — график BLER vs SNR
 
 Пример вывода JSON:
 
@@ -224,7 +224,7 @@ PUCCH-FORMAT2-block-codes/
 | `make test` | Запуск unit-тестов и интеграционных тестов |
 | `make unit-test` | Запуск только unit-тестов |
 | `make integrarion-test` | Запуск только интеграционных тестов |
-| `make snr-sweep [iters] [start] [end] [step]` | Полное моделирование (по умолчанию: 10000 итераций, -10...6 дБ) |
+| `make snr-modeling [iters] [start] [end] [step]` | Полное моделирование (по умолчанию: 10000 итераций, -10...6 дБ) |
 | `make help` | Показать справку |
 
 ---
@@ -302,14 +302,14 @@ make integration-test
 
 ## 📊 Визуализация результатов
 
-После запуска `make snr-sweep` автоматически генерируется график `results/full_snr_sweep.png`
+После запуска `make snr-modeling` автоматически генерируется график `results/full_snr_modeling.png`
 
-*(График строится с помощью `scripts/plot_full_sweep.py`)*
+*(График строится с помощью `scripts/plot_full_modeling.py`)*
 
 **Ручной запуск построения:**
 
 ```bash
-python3 scripts/plot_full_sweep.py results/full_snr_sweep.json
+python3 scripts/plot_full_modeling.py results/full_snr_modeling.json
 ```
 
 ---
