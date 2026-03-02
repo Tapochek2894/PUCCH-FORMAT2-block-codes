@@ -31,13 +31,7 @@ constexpr std::array<std::array<uint8_t, Encoder::kMaxCodeLength>, Encoder::kCod
     }};
 
 Encoder::Encoder(int code_length) : code_length_(code_length) {
-    bool is_valid = false;
-    for (int valid_len : kValidCodeLengths) {
-        if (code_length_ == valid_len) {
-            is_valid = true;
-            break;
-        }
-    }
+    bool is_valid = ValidateCodeLength(code_length_);
 
     if (!is_valid) {
         throw std::invalid_argument("Invalid code_length: " + std::to_string(code_length_) +
@@ -63,14 +57,23 @@ std::vector<uint8_t> Encoder::Encode(const std::vector<uint8_t>& data) {
     std::vector<uint8_t> codeword(kCodewordLength, 0);
 
     for (int row = 0; row < kCodewordLength; ++row) {
-        int sum = 0;
+        uint8_t sum = 0;
         for (int col = 0; col < code_length_; ++col) {
             sum ^= kGeneratorMatrix[row][start_col + col] & data[col];
         }
-        codeword[row] = static_cast<uint8_t>(sum);
+        codeword[row] = sum;
     }
 
     return codeword;
+}
+
+bool ValidateCodeLength(int code_length) {
+    for (int len : pucch_f2::kValidCodeLengths) {
+        if (code_length == len) {
+            return true;
+        }
+    }
+    return false;
 }
 
 } // namespace pucch_f2

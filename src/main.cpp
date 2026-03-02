@@ -13,15 +13,6 @@ using json = nlohmann::json;
 
 const uint32_t RANDOM_SEED = std::time(0);
 
-bool ValidateCodeLength(int code_length) {
-    for (int len : pucch_f2::kValidCodeLengths) {
-        if (code_length == len) {
-            return true;
-        }
-    }
-    return false;
-}
-
 std::complex<double> ParseComplex(const std::string& string) {
     double re, im;
     char sign, j_char;
@@ -66,7 +57,7 @@ void ValidateCodingInput(const json& input) {
         }
     }
 
-    if (!ValidateCodeLength(code_length)) {
+    if (!pucch_f2::ValidateCodeLength(code_length)) {
         throw std::invalid_argument("Invalid code_length: " + std::to_string(code_length) +
                                     ". Must be one of {2, 4, 6, 8, 11}");
     }
@@ -82,7 +73,7 @@ void ValidateDecodingInput(const json& input) {
     }
 
     int code_length = input["num_of_pucch_f2_bits"].get<int>();
-    if (!ValidateCodeLength(code_length)) {
+    if (!pucch_f2::ValidateCodeLength(code_length)) {
         throw std::invalid_argument("Invalid code_length: " + std::to_string(code_length) +
                                     ". Must be one of {2, 4, 6, 8, 11}");
     }
@@ -123,7 +114,7 @@ void ValidateChannelSimulationInput(const json& input) {
     int iterations = input["iterations"].get<int>();
     double snr_db = input["snr_db"].get<double>();
 
-    if (!ValidateCodeLength(code_length)) {
+    if (!pucch_f2::ValidateCodeLength(code_length)) {
         throw std::invalid_argument("Invalid code_length: " + std::to_string(code_length) +
                                     ". Must be one of {2, 4, 6, 8, 11}");
     }

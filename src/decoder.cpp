@@ -7,13 +7,8 @@
 namespace pucch_f2 {
 
 Decoder::Decoder(int code_length) : code_length_(code_length), num_codewords_(1 << code_length) {
-    bool is_valid = false;
-    for (int valid_len : kValidCodeLengths) {
-        if (code_length_ == valid_len) {
-            is_valid = true;
-            break;
-        }
-    }
+    bool is_valid = ValidateCodeLength(code_length_);
+
     if (!is_valid) {
         throw std::invalid_argument("Invalid code_length: " + std::to_string(code_length_) +
                                     ". Must be one of {2, 4, 6, 8, 11} for PUCCH Format 2");
