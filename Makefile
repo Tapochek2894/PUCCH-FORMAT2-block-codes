@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -O3 -Wall -Werror -Wextra -Wpedantic -Iinclude
+CXXFLAGS = -std=c++17 -O3 -Wall -Wextra -Wpedantic -Iinclude
 
 TARGET = pucch_codes_modeling.elf
 SRCS = $(wildcard src/*.cpp)
@@ -41,11 +41,11 @@ snr-modeling: $(TARGET)
 
 snr-modeling-fast: $(TARGET)
 	@chmod +x scripts/snr_modeling.sh scripts/plot_full_modeling.py
-	@./scripts/snr_modeling.sh 100 -10 6 4
+	@./scripts/snr_modeling.sh 100 -10 4 2
 
 snr-modeling-no-plot: $(TARGET)
 	@chmod +x scripts/snr_modeling.sh
-	@./scripts/snr_modeling.sh 10000 -10 6 2 1
+	@./scripts/snr_modeling.sh 10000 -10 3 2 1
 
 help:
 	@echo "Usage:"

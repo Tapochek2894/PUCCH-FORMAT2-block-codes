@@ -19,10 +19,8 @@ std::vector<double> QpskDemodulator::Demodulate(const std::vector<std::complex<d
 
 std::pair<double, double> QpskDemodulator::ComputeLlr(const std::complex<double>& symbol,
                                                       double snr_linear) {
-    double scale = 2.0 * std::sqrt(2.0) * snr_linear;
-
-    double llr_msb = -scale * symbol.real();
-    double llr_lsb = -scale * symbol.imag();
+    double llr_msb = -snr_linear * symbol.real();
+    double llr_lsb = -snr_linear * symbol.imag();
 
     return {llr_msb, llr_lsb};
 }

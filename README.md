@@ -224,7 +224,7 @@ PUCCH-FORMAT2-block-codes/
 | `make test` | Запуск unit-тестов и интеграционных тестов |
 | `make unit-test` | Запуск только unit-тестов |
 | `make integrarion-test` | Запуск только интеграционных тестов |
-| `make snr-modeling [iters] [start] [end] [step]` | Полное моделирование (по умолчанию: 10000 итераций, -10...6 дБ) |
+| `make snr-modeling [iters] [start] [end] [step]` | Полное моделирование (по умолчанию: 10000 итераций, -10...3 дБ) |
 | `make help` | Показать справку |
 
 ---

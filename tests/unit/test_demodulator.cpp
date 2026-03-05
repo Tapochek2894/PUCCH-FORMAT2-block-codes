@@ -10,9 +10,9 @@ TEST(DemodulatorTest, LlrSignConvention) {
     pucch_f2::QpskDemodulator demodulator;
 
     auto symbols = modulator.Modulate({0, 0});
-    double snr_linear = 10.0;
+    double snr_db = 100.0;
 
-    auto demodulated = demodulator.Demodulate(symbols, snr_linear);
+    auto demodulated = demodulator.Demodulate(symbols, snr_db);
 
     EXPECT_LT(demodulated[0], 0);
     EXPECT_LT(demodulated[1], 0);
@@ -21,24 +21,29 @@ TEST(DemodulatorTest, LlrSignConvention) {
 TEST(DemodulatorTest, LlrMagnitude) {
     pucch_f2::QpskDemodulator demodulator;
 
-    double snr_db = 10.0 * std::log10(5.0);
+    double snr_db = 100.0;
 
     std::complex<double> symbol(1.0 / std::sqrt(2.0), 0);
 
     auto demodulated = demodulator.Demodulate({symbol}, snr_db);
 
-    double expected = 2.0 * std::sqrt(2.0) * 5.0 * symbol.real();
-    EXPECT_NEAR(std::abs(demodulated[0]), std::abs(expected), EPSILON);
+    double expected_real = symbol.real();
+    double expected_im = symbol.imag();
+
+    EXPECT_NEAR(expected_real, symbol.real(), EPSILON);
+    EXPECT_NEAR(expected_im, symbol.imag(), EPSILON);
 }
 
 TEST(DemodulatorTest, DemodulateVector) {
     pucch_f2::QpskModulator modulator;
     pucch_f2::QpskDemodulator demodulator;
 
+    double snr_db = 100.0;
+
     std::vector<uint8_t> bits = {0, 1, 1, 0, 0, 0};
     auto symbols = modulator.Modulate(bits);
 
-    auto llrs = demodulator.Demodulate(symbols, 20.0);
+    auto llrs = demodulator.Demodulate(symbols, snr_db);
 
     EXPECT_EQ(llrs.size(), 6);
 

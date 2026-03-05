@@ -5,7 +5,7 @@ OUTPUT_FILE="results/full_snr_modeling.json"
 PLOT_SCRIPT="scripts/plot_full_modeling.py"
 ITERATIONS=${1:-10000}
 SNR_START=${2:--10}
-SNR_END=${3:-6}
+SNR_END=${3:-3}
 SNR_STEP=${4:-1}
 SKIP_PLOT=${5:-0}
 

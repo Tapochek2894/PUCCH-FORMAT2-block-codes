@@ -36,7 +36,7 @@ TEST(ChannelTest, AwgnNoiseVariance) {
         return var / v.size();
     };
 
-    double expected_var = 0.5;
+    double expected_var = 0.25;
     EXPECT_NEAR(variance(noise_i), expected_var, 0.1);
     EXPECT_NEAR(variance(noise_q), expected_var, 0.1);
 }

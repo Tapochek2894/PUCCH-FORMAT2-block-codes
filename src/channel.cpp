@@ -4,7 +4,7 @@ namespace pucch_f2 {
 
 AwgnChannel::AwgnChannel(double snr_db, uint32_t seed) : random_generator_(seed) {
     double snr_linear = std::pow(10.0, snr_db / 10.0);
-    sigma_ = std::sqrt(1.0 / (2.0 * snr_linear));
+    sigma_ = std::sqrt(1.0 / (4.0 * snr_linear));
 }
 
 std::vector<std::complex<double>>

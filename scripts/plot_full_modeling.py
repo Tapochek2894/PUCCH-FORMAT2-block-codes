@@ -36,7 +36,7 @@ def main():
     for n in by_length:
         pairs = sorted(zip(by_length[n]['snr'], by_length[n]['bler']))
         by_length[n]['snr'] = [p[0] for p in pairs]
-        by_length[n]['bler'] = [p[1] for p in pairs]
+        by_length[n]['bler'] = [p[1] if p[1] > 1e-3 else float('nan') for p in pairs]
     
     plt.figure(figsize=(10, 6))
     colors = plt.cm.viridis(np.linspace(0, 1, len(by_length)))

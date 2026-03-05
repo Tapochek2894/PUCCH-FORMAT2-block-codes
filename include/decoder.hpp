@@ -10,7 +10,7 @@ class Decoder {
 public:
     explicit Decoder(int code_length);
 
-    std::vector<uint8_t> Decode(const std::vector<double>& llr_values);
+    std::vector<uint8_t> Decode(const std::vector<double>& soft_values);
 
 private:
     static constexpr int kCodewordLength = 20;

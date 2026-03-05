@@ -29,7 +29,7 @@ TEST(DecoderTest, DecodeNoNoise) {
 
         auto codeword = encoder.Encode(data);
         auto symbols = modulator.Modulate(codeword);
-        auto llr = demodulator.Demodulate(symbols, 20.0);
+        auto llr = demodulator.Demodulate(symbols, 100);
         auto decoded = decoder.Decode(llr);
 
         EXPECT_EQ(data, decoded) << "Failed for code length " << code_len;
@@ -52,7 +52,7 @@ TEST(DecoderTest, DecodeDeterministic) {
     std::vector<uint8_t> data = {1, 0};
     auto codeword = encoder.Encode(data);
     auto symbols = modulator.Modulate(codeword);
-    auto llr = demodulator.Demodulate(symbols, 50.0);
+    auto llr = demodulator.Demodulate(symbols, 100);
 
     auto dec1 = decoder.Decode(llr);
     auto dec2 = decoder.Decode(llr);

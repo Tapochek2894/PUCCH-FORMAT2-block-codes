@@ -11,7 +11,7 @@
 
 using json = nlohmann::json;
 
-const uint32_t RANDOM_SEED = std::time(0);
+const uint32_t RANDOM_SEED = 3121113U;
 
 std::complex<double> ParseComplex(const std::string& string) {
     double re, im;
@@ -167,7 +167,7 @@ json RunDecoding(const json& input) {
     }
 
     pucch_f2::QpskDemodulator demodulator;
-    auto llr = demodulator.Demodulate(symbols, 0.0);
+    auto llr = demodulator.Demodulate(symbols, 100.0);
 
     pucch_f2::Decoder decoder(code_length);
     auto decoded = decoder.Decode(llr);
