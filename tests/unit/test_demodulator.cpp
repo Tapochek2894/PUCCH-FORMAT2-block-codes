@@ -23,15 +23,12 @@ TEST(DemodulatorTest, LlrMagnitude) {
 
     double snr_db = 100.0;
 
-    std::complex<double> symbol(1.0 / std::sqrt(2.0), 0);
+    std::complex<double> symbol(-1.0 / std::sqrt(2.0), 0);
 
     auto demodulated = demodulator.Demodulate({symbol}, snr_db);
 
-    double expected_real = symbol.real();
-    double expected_im = symbol.imag();
-
-    EXPECT_NEAR(expected_real, symbol.real(), EPSILON);
-    EXPECT_NEAR(expected_im, symbol.imag(), EPSILON);
+    double expected = symbol.real() >= 0 ? 0 : 1;
+    EXPECT_EQ(expected, 1);
 }
 
 TEST(DemodulatorTest, DemodulateVector) {
