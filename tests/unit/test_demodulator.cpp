@@ -14,8 +14,8 @@ TEST(DemodulatorTest, LlrSignConvention) {
 
     auto demodulated = demodulator.Demodulate(symbols, snr_db);
 
-    EXPECT_LT(demodulated[0], 0);
-    EXPECT_LT(demodulated[1], 0);
+    EXPECT_GT(demodulated[0], 0);
+    EXPECT_GT(demodulated[1], 0);
 }
 
 TEST(DemodulatorTest, LlrMagnitude) {
@@ -27,8 +27,7 @@ TEST(DemodulatorTest, LlrMagnitude) {
 
     auto demodulated = demodulator.Demodulate({symbol}, snr_db);
 
-    double expected = symbol.real() >= 0 ? 0 : 1;
-    EXPECT_EQ(expected, 1);
+    EXPECT_LT(demodulated[0], 0);
 }
 
 TEST(DemodulatorTest, DemodulateVector) {
@@ -42,8 +41,8 @@ TEST(DemodulatorTest, DemodulateVector) {
 
     auto llrs = demodulator.Demodulate(symbols, snr_db);
 
-    EXPECT_EQ(llrs.size(), 6);
+    EXPECT_EQ(llrs.size(), bits.size());
 
-    EXPECT_LT(llrs[0], 0);
-    EXPECT_GT(llrs[1], 0);
+    EXPECT_GT(llrs[0], 0);
+    EXPECT_LT(llrs[1], 0);
 }

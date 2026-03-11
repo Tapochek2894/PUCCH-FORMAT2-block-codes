@@ -61,7 +61,7 @@ double Decoder::ComputeMetric(const std::vector<uint8_t>& codeword,
     double metric = 0.0;
 
     for (int i = 0; i < kCodewordLength; ++i) {
-        double symbol = (codeword[i] == 1) ? 1.0 : -1.0;
+        double symbol = (codeword[i] == 0) ? 1.0 : -1.0;
         metric += symbol * llr[i];
     }
 
